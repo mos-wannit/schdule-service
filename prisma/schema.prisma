@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ApiKey {
+  id       Int     @id @default(autoincrement())
+  apiKey   String  @unique
+  isEnable Boolean @default(true)
+
+  @@map("api_key")
+}
+
+model Schedule {
+  id             String  @id @default(uuid())
+  cronExpression String?
+  isEnable       Boolean @default(true)
+
+  @@map("schedule")
+}
+
+model JobHistory {
+  id String @id @default(uuid())
+
+  createdAt DateTime @default(now())
+
+  @@map("job_history")
+}
